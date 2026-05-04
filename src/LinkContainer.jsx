@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Table from './Table'
 import Form from './Form'
 
+const API = 'https://crud-api-8emy.onrender.com'
+
 class LinkContainer extends Component {
   constructor(props) {
     super(props)
@@ -12,20 +14,20 @@ class LinkContainer extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/users')
+    fetch(`${API}/users`)
       .then(res => res.json())
       .then(data => this.setState({ favLinks: data }))
   }
 
   removeLink = (id) => {
-    fetch(`http://localhost:3000/users/${id}`, { method: 'DELETE' })
+    fetch(`${API}/users/${id}`, { method: 'DELETE' })
       .then(() => {
         this.setState({ favLinks: this.state.favLinks.filter(link => link.id !== id) })
       })
   }
 
   handleSubmit = (newLink) => {
-    fetch('http://localhost:3000/users', {
+    fetch(`${API}/users`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: newLink.name, email: newLink.url })
@@ -41,7 +43,7 @@ class LinkContainer extends Component {
   }
 
   handleUpdate = (updatedLink) => {
-    fetch(`http://localhost:3000/users/${updatedLink.id}`, {
+    fetch(`${API}/users/${updatedLink.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: updatedLink.name, email: updatedLink.email })
